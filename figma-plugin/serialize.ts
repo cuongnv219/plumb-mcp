@@ -250,10 +250,10 @@ export function serialize(
 
   // v0.10 Phase 3 — fidelity additions. Capture each field only when it
   // diverges from the CSS default so unchanged nodes stay terse.
-  // Figma's `rotation` is in radians, anti-clockwise. CSS rotate() is
-  // degrees, clockwise. Convert here so the consumer doesn't have to.
+  // Figma's plugin-API `rotation` is degrees (-180..180), anti-clockwise. CSS
+  // rotate() is clockwise. Flip the sign here so the consumer doesn't have to.
   if (typeof n.rotation === "number" && Math.abs(n.rotation) > 0.0001) {
-    out.rotation = -(n.rotation * 180) / Math.PI;
+    out.rotation = -n.rotation;
   }
   // Blend modes: PASS_THROUGH (frame default) and NORMAL (everything else
   // default) are CSS's implicit blend behaviour — drop those, keep the rest.
